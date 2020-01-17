@@ -1,11 +1,6 @@
-/bower_components/
-/node_modules/
-/.pulp-cache/
-/output/
 /generated-docs/
-/.psc-package/
-/.psc*
-/.purs*
-/.psa*
+.stack-work/
+triskadekaphilia.cabal
+stack.yaml.lock
 *~
 .#*
