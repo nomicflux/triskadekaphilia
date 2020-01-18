@@ -25,7 +25,10 @@ dependencies:
 library:
   source-dirs: src
   dependencies:
-    - synthesizer-core
+  - synthesizer-core
+  - pipes
+  - pipes-concurrency
+  - gloss
 
 executables:
   triskadekaphilia-exe:
@@ -36,6 +39,9 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
+    - async
+    - pipes
+    - pipes-concurrency
     - triskadekaphilia
 
 tests:
