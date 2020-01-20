@@ -1,10 +1,14 @@
 module TDP.Note where
 
+import           Data.Hashable (Hashable, hash, hashWithSalt)
 import           Data.Ratio
 
 data Note = Note { noteRatio :: Ratio Integer
                  , noteCents :: Double }
     deriving (Eq)
+
+instance Hashable Note where
+  hashWithSalt salt (Note ratio cents) = (salt * (hash ratio + hash cents)) `mod` salt
 
 instance Show Note where
   show (Note ratio cents) = concat $ ["Note <"

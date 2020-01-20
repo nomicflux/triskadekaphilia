@@ -19,15 +19,15 @@ playTones :: Double -> Consumer [Double] IO ()
 playTones sec = await >>= \tones -> lift $ playTones' sec tones
 
 playTones' :: Double -> [Double] -> IO ()
-playTones' sec tones = Play.monoToInt16 rate freqs >> pure ()
+playTones' sec tones = play
   where
     rate = 44100::Double
     k tone = getToneParam rate tone
-    end = 100.0 * sec * 2.0 * pi
+    end = 1000.0 * sec * 2.0 * pi
     mapper tone = map sin [0::Double,(k tone)..end]
-    (sine1 : sines) = mapper <$> tones
-    freqs = foldl (zipWith (+)) sine1 sines
-    play = Play.monoToInt16 rate freqs
+    play = case mapper <$> tones of
+      (sine1 : sines) -> (Play.monoToInt16 rate $ foldl (zipWith (+)) sine1 sines) >> pure ()
+      _ -> pure ()
 
-playNotes :: Consumer [Note] IO ()
-playNotes = P.map (runNote JustIntonation 440.0 <$>) >-> playTones 1.0
+playNotes :: Int -> Consumer [Note] IO ()
+playNotes rate = P.map (runNote JustIntonation 440.0 <$>) >-> playTones (1.0 / fromIntegral rate)

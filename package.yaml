@@ -29,6 +29,9 @@ library:
   - pipes
   - pipes-concurrency
   - gloss
+  - stm
+  - unordered-containers
+  - hashable
 
 executables:
   triskadekaphilia-exe:
@@ -42,6 +45,7 @@ executables:
     - async
     - pipes
     - pipes-concurrency
+    - gloss
     - triskadekaphilia
 
 tests:
